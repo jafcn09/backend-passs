@@ -20,10 +20,6 @@ nacimiento:{
     required: true,
     unique: true
   },
-  password:{
-      type: String,
-      required: true,
-  },
   celular:{
   type: String,
   },

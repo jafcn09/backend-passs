@@ -23,7 +23,7 @@ const getUsuarios = async(req, res) => {
 }
 
 const crearUsuario = async(req, res = response) => {
-  const { email,password,nombre,apellido,dni,celular,nacimiento} = req.body;
+  const { email,nombre,apellido,dni,celular,nacimiento} = req.body;
 
   try {
     const existeEmail = await Usuario.findOne({ email });
@@ -36,9 +36,7 @@ const crearUsuario = async(req, res = response) => {
     }
 
     const usuario = new Usuario(req.body)
-    /**encriptar contraseña */
-    const salt = bcrypt.genSaltSync();
-    usuario.password = bcrypt.hashSync(password, salt);
+    
 
     /**generar token JWT */
     const token = await generarJWT(usuario.id);
@@ -74,7 +72,7 @@ const actualizarUsuario = async(req, res = response) => {
     }
 
     /**actualizar data */
-    const { password,  email, ...campos } = req.body; /**desestructuramos lo q viene en el request body, campos q no se usaran para actualizar */
+    const { dni,  email, ...campos } = req.body; /**desestructuramos lo q viene en el request body, campos q no se usaran para actualizar */
     if(usuarioDB.email != email) {
       const existeEmail = await Usuario.findOne({ email });
       if (existeEmail) {
