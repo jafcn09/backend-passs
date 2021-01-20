@@ -23,15 +23,17 @@ const searchColeccion = async(req, res = response) => {
   let data = [];
 
   switch (tabla) {
-  
+   
     case "usuarios":
       data = await Usuario.find({ nombre: regex });
       break;
-      
+      case "tarjetas":
+        data = await Tarjeta.find({nnombre: regex});
+        break;
     default:
       return res.status(400).json({
         ok: false,
-        msg: 'La tabla tiene que ser usuarios'
+        msg: 'La tabla tiene que ser usuarios/tarjetas'
       });
     }
       res.json({ ok: true, resultados: data });

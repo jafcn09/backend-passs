@@ -3,6 +3,7 @@ const express = require('express') /**importando express */
 const cors = require('cors')
 
 const { dbConnection } = require('./database/config');
+const { urlencoded } = require('express');
 
 const app = express();/**crear el servidor express */
 
@@ -11,18 +12,20 @@ app.use(cors()) /**config. cors */
 
 app.use(express.json()); /**lectura y parseo del body */
 
+
+
 /**llamando a dbconection */
 dbConnection();
+
 
 /**directorio publico */
 app.use(express.static('public'));
 
 
-/**rutas */
 app.use('/api/usuarios', require('./rutas/usuarios'));
 app.use('/api/login', require('./rutas/auth'));
 app.use('/api/todo', require('./rutas/busqueda'));
-
+app.use('/api/tarjetas', require('./rutas/tarjetas'));
 /*iniciar el servidor*/
 /**port: 3000 */
 app.listen(process.env.PORT, () => {
