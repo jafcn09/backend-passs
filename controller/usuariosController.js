@@ -26,12 +26,17 @@ const crearUsuario = async(req, res = response) => {
   const { email,nombre,apellido,dni,celular,nacimiento} = req.body;
 
   try {
-    const existeEmail = await Usuario.findOne({ email });
+    const existeEmail = await Usuario.findOne({ email,dni,celular,nacimiento });
 
     if(existeEmail) {
       return res.status(400).json({
-        ok: false,
-        msg: 'El email ingresado ya esta registrado.'
+        status:400,
+
+        data:{
+          ok: 'error',
+          msg: 'Este usuario, ya existe.'
+        }
+        
       });
     }
 
@@ -44,17 +49,26 @@ const crearUsuario = async(req, res = response) => {
     await usuario.save(); /**es una promesa, puede q lo haga rapido o demore */
 
     res.json({
-      ok: true,
-      msg: 'Usuario creado con éxito.',
-      usuario: usuario,
-      token
+ 
+      status:200,
+      data:{
+        ok: 'Se hizo bien el registro',
+        msg: 'Se creo el usuario.',
+        usuario: usuario,
+        token
+      }
+     
     });
 
   } catch (error) {
     console.log(error)
     res.status(500).json({
-      ok: false,
-      msg: 'Error al crear usuario.'
+      status:500,
+      data:{
+        ok: 'errror',
+        msg: 'Completar los campos por favor.'
+      }
+     
     })
   }
 }
@@ -72,13 +86,17 @@ const actualizarUsuario = async(req, res = response) => {
     }
 
     /**actualizar data */
-    const { dni,  email, ...campos } = req.body; /**desestructuramos lo q viene en el request body, campos q no se usaran para actualizar */
-    if(usuarioDB.email != email) {
-      const existeEmail = await Usuario.findOne({ email });
+    const { dni,  email,dni,nacimiento,celular,...campos } = req.body; /**desestructuramos lo q viene en el request body, campos q no se usaran para actualizar */
+    if(usuarioDB.email != email,dni,nacimiento,celular) {
+      const existeEmail = await Usuario.findOne({ email, dni, nacimiento, celular});
       if (existeEmail) {
         return res.status(400).json({
-          ok: false,
-          msg: 'Ya existe un usuario con ese email.'
+          status:400,
+          data:{
+            ok: false,
+            msg: 'ya existe este usuario con estos parametros'
+          }
+         
         })
       }
     }
@@ -88,16 +106,25 @@ const actualizarUsuario = async(req, res = response) => {
 
 
     res.json({
-      ok: true,
-      msg: 'Se actualizó el usuario correctamente.',
-      usuario: usuarioActualizado
+      status:205,
+      data:{
+
+        ok: 'bien',
+        msg: 'Se actualizó el usuario correctamente.',
+        usuario: usuarioActualizado
+      }
+
     });
 
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      ok: false,
-      msg: 'Error al actualizar usuario'
+      status:500,
+      data:{
+        msg: 'Error al actualizar usuario'
+
+      }
+     
     })
   }
 }
@@ -109,8 +136,11 @@ const borrarUsuario = async(req, res = response) => {
     const usuarioDB = await Usuario.findById(uid);
     if(!usuarioDB) {
       return res.status(404).json({
-        ok: false,
-        msg: 'No existe un usuario con ese ID en la DB.'
+        status:404,
+        data:{
+          msg: 'No existe un usuario con ese codigo en la base de datos'
+        }
+    
       })
     }
     

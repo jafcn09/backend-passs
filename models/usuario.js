@@ -11,9 +11,13 @@ const UsuarioSchema = Schema({
   },
   dni:{
     type: String,
+    required:true,
+    unique:true
 },
 nacimiento:{
   type: String,
+  required: true,
+  unique:true,
 },
   email: {
     type: String,
@@ -22,6 +26,8 @@ nacimiento:{
   },
   celular:{
   type: String,
+  required: true,
+  unique: true,
   },
   enabled: {
     type: String,

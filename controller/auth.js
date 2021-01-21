@@ -4,32 +4,44 @@ const Usuario = require('../models/usuario');
 const { generarJWT } = require('../helpers/jwt');
 
 const login = async(req, res = response) => {
-  const { email, celular} = req.body;
+  const { dni} = req.body;
   try {
     /**verificar email */
-    const usuarioDB = await Usuario.findOne({enabled: '1', email, celular});
+    const usuarioDB = await Usuario.findOne({enabled: '1',dni});
     if (!usuarioDB) {
       return res.status(400).json({
-        ok: false,
-        msg: 'El usuario no existe.' /**usuario deshabilitado*/
+
+       
+        status:100,
+        data:{
+          ok: 'no se reconoce',
+          cambio: 'El dni no existe'
+        }
+        
       });
     }
 
 
-    /**generar token JWT */
-    const token = await generarJWT(usuarioDB.id);
-
     res.json({
-      ok: true,
-      msg: 'Usuario '+usuarioDB.email+ usuarioDB.celular+' autenticado.',
-      token
+      status: 200,
+      data: {
+        ok:  'bienvenido',
+        cambio: 'Dni '+usuarioDB.dni + 'exitoso.',
+       }
+
+     
     });
     
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      ok: false,
-      msg: 'Hable con el administrador.'
+     
+      status: 300,
+      data:{
+        ok: 'no se reconoce',
+        cambio: 'Hable con el administrador.'
+      }
+      
     });
   }
 }
@@ -45,7 +57,7 @@ const renewToken = async(req, res = response) => {
   /**por si el usuario esta deshabilitado */
   if (usuario.enabled != 1) {
     return res.status(400).json({
-      ok: false,
+      ok: 'no se reconoce',
       msg: 'El usuario no existe.' /**usuario deshabilitado*/
     });
   }
