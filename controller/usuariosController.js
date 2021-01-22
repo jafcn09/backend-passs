@@ -86,7 +86,7 @@ const actualizarUsuario = async(req, res = response) => {
     }
 
     /**actualizar data */
-    const { dni,  email,dni,nacimiento,celular,...campos } = req.body; /**desestructuramos lo q viene en el request body, campos q no se usaran para actualizar */
+    const { dni,  email,nacimiento,celular,...campos } = req.body; /**desestructuramos lo q viene en el request body, campos q no se usaran para actualizar */
     if(usuarioDB.email != email,dni,nacimiento,celular) {
       const existeEmail = await Usuario.findOne({ email, dni, nacimiento, celular});
       if (existeEmail) {

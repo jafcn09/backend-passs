@@ -3,7 +3,6 @@ const express = require('express') /**importando express */
 const cors = require('cors')
 
 const { dbConnection } = require('./database/config');
-const { urlencoded } = require('express');
 
 const app = express();/**crear el servidor express */
 

@@ -16,6 +16,10 @@ Ese token se va a utilizar en el front, para que el usuario pueda ingresar a la 
 
   Librerias Utilizadas:
    El npm i nodemailer para la verificacion de correo electronico en el contraller.
+   npm i para reinstallar los packetes de node
+   npm init para crear un nuevo proyecto de node.express 
+   
+   npm i express-save para que se instale node.express
    Npm i mongoose para que nuestra base de datos pueda funcionar correctamente con la conexion a node.express
    Npm i  dotenv para poder configurar la ruta de nuestra base de datos, el puerto 3005 que va a correr nuestra base de datos y nuestro clave secreta que esta abreviada con JWT_SECRET.
    Npm i uuid para que podamos utilizar nuestro id de una forma mas abreviada en el postman o en la parte frond.
