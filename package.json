@@ -1,12 +1,17 @@
 {
-  "name": "backend-lima-pass",
+  "engines": {
+    "node": "14.15.0"
+  },
+  "name": "backend-passs",
   "version": "1.0.0",
   "description": "Lima-Pass-Proyecto",
-  "main": "index.js",
+  "main": " index.js",
   "scripts": {
-    "start:dev": "nodemon index.js"
+    "start": "node index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "heroku"
+  ],
   "author": "Grupo1",
   "license": "ISC",
   "dependencies": {
@@ -18,6 +23,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.12",
     "nodemailer": "^6.4.17",
+    "serve-favicon": "^2.5.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
