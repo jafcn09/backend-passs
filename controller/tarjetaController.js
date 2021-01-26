@@ -26,16 +26,25 @@ const crearTarjeta = async(req, res = response) => {
 
   try {
     const tarjetaSave = await tarjeta.save()
+ 
     res.json({
-      ok: true,
-      msg: 'Hospital creado con éxito.',
-      msg: tarjetaSave
+      status:200,
+      data: {
+        ok: 'se registro correctamente ',
+        msg:'se creo la tarjeta',
+        msg: tarjetaSave
+      }
+     
     });
   } catch (error) {
     console.log(error)
     res.status(500).json({
-      ok: false,
-      msg: 'Error al crear hospital.'
+      status: 500, 
+      data:{
+        ok: 'error',
+        msg: 'Esta tarjeta ya esta registrada.'
+      }
+     
     });
   }
 }
@@ -49,8 +58,12 @@ const actualizarTarjeta = async (req, res = response) => {
     const tarjetaDB = await Tarjeta.findById(id);
     if (!tarjetaDB) {
       return res.status(404).json({
-        ok: true,
-        msg: "Tarjeta No ubicada.",
+        status:404, 
+        data:{
+          ok: 'Comuniquese con soporte',
+          msg: "Ingresar bien los campos.",
+        }
+      
       });
     }
     /**formas de actualizar campos */
@@ -68,15 +81,23 @@ const actualizarTarjeta = async (req, res = response) => {
     );
 
     res.json({
-      ok: true,
-      msg: "Se actualizó correctamente.",
-      tarjeta: tarjetaActualizada,
+      status:200,
+      data:{
+        ok: 'cambios correctos',
+        msg: "Se actualizó correctamente.",
+        tarjeta: tarjetaActualizada,
+      }
+    
     });
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      ok: false,
-      msg: "Error a actualizar la tarjeta.",
+      status: 500,
+      data: {
+        ok: 'no se pudo actualizar la tarjeta',
+        msg: "para mayor ayuda, comuniquese con el administrador.",
+      }
+     
     });
   }
 }
@@ -87,29 +108,45 @@ const borrarTarjeta = async (req, res = response) => {
     const tarjetaDB = await Tarjeta.findById(uid);
     if(!tarjetaDB) {
       return res.status(404).json({
-        ok: false,
-        msg: 'No existe una tarjeta con ese id'
+        status:400,
+        data:{
+          ok: 'error',
+          msg: 'No existe una tarjeta con los parametros ingresados'
+        }
+        
       })
     }
 
     if (tarjetaDB.enabled === '1') {
       await Tarjeta.findByIdAndUpdate(uid, {enabled: '0'}, {new: true});
       res.json({
-        ok: true,
-        msg: 'Tarjeta deshabilitada.'
+        status:100,
+        data:{
+          ok: 'bien',
+          msg: 'se deshabilito la tarjeta.'
+        }
+       
       });
     } else {
       await Tarjeta.findByIdAndUpdate(uid, {enabled: '1'}, {new: true});
       res.json({
-        ok: true,
-        msg: 'Tarjeta habilitada.'
+        status:200,
+        data:{
+          ok: 'que gusto tenerte de nuevo',
+          msg: 'se habilito la tarjeta.'
+        }
+       
       });
     }
 
   } catch (error) {
     res.status(500).json({
-      ok: false,
-      msg: 'error al borrar la tarjeta.' 
+      status:500,
+      data:{
+        ok: 'error',
+        msg: 'error al borrar la tarjeta.' 
+      }
+    
     });
   }
 }
