@@ -6,7 +6,7 @@ const getTarjetas = async(req, res) => {
 
 
   const [ tarjetas, total_reg ] = await Promise.all([
-    Tarjeta.find({enabled: '1'},'usuario dueño').skip(desde).limit(5),
+    Tarjeta.find({enabled: '1'},'usuario dueño, nombre, tarjeta').skip(desde).limit(5),
     Tarjeta.countDocuments()
   ]);
 
@@ -17,28 +17,30 @@ const getTarjetas = async(req, res) => {
     // uid: req.uid
   });
 }
-
 const crearTarjeta = async(req, res = response) => {
   const uid = req.uid;
   const tarjeta = new Tarjeta({
-    tarjetas: uid,
-    tipo:uid
+    usuario: uid,
+    ...req.body
   });
+
   try {
     const tarjetaSave = await tarjeta.save()
     res.json({
       ok: true,
-      msg: 'Tarjeta  creada con éxito.',
+      msg: 'Hospital creado con éxito.',
       msg: tarjetaSave
     });
   } catch (error) {
     console.log(error)
     res.status(500).json({
       ok: false,
-      msg: 'Error al crear la tarjeta.'
+      msg: 'Error al crear hospital.'
     });
   }
 }
+
+
 
 const actualizarTarjeta = async (req, res = response) => {
   const id = req.params.id;

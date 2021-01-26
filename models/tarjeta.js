@@ -7,12 +7,12 @@ const TarjetaSchema = Schema ({
     dueño: {
         type: String,
         required: true,
-        unique:true
+        unique: true
     },
     tipo: {
         type: String,
         required: true,
-        unique:true
+        unique: true
     },
    
     enable: {
