@@ -6,11 +6,13 @@ const TarjetaSchema = Schema ({
     },
     dueño: {
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     tipo: {
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
    
     enable: {
@@ -19,7 +21,7 @@ const TarjetaSchema = Schema ({
     },
     usuario: {
         required: true,
-        type: Schema.Types.ObjectId,
+        type: Schema.Types,
         ref: 'Usuario'
       }
 }, {colection: 'tarjetas'});

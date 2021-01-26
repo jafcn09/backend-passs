@@ -1,22 +1,29 @@
 const { response } = require('express');
 const Tarjeta = require('../models/tarjeta');
 
-const getTarjetas = async(req, res = response) => {
-  const tarjetas = await Tarjeta.find({enabled: '1'}).populate('usuario', 'nombre');
+const getTarjetas = async(req, res) => {
+  const desde = Number(req.query.desde) || 0;
+
+
+  const [ tarjetas, total_reg ] = await Promise.all([
+    Tarjeta.find({enabled: '1'},'usuario dueño').skip(desde).limit(5),
+    Tarjeta.countDocuments()
+  ]);
+
   res.json({
     ok: true,
-    tarjetas
+    tarjetas,
+    total_reg
+    // uid: req.uid
   });
 }
 
 const crearTarjeta = async(req, res = response) => {
   const uid = req.uid;
   const tarjeta = new Tarjeta({
-    usuario: uid,
-    tipo:uid,
-    ...req.body
+    tarjetas: uid,
+    tipo:uid
   });
-
   try {
     const tarjetaSave = await tarjeta.save()
     res.json({
