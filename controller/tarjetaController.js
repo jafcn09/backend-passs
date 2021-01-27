@@ -18,36 +18,20 @@ const getTarjetas = async(req, res) => {
 }
 const getTarjetaByDni = async(req, res) => {
   const  dni= req.params.dni;
-
-  const tarjetas = await Tarjeta.find({usuario: usuario.uid});
-  const  usuario  = await Usuario.findOne({dni: dni});
-  try {
- 
-    res.json({
-      status:200,
-      data: {
-        ok: 'se encontro el dni ',
-        msg:'tarjeta valida',
-        msg: tarjetas,
-        
-      }
+  console.log(dni);
+    const  usuario  = await Usuario.findOne({dni: dni});
+    const tarjetas = await Tarjeta.find({usuario: usuario.uid});
+    return res.json({
+    status:200,
+    data:{
+      ok: 'bien',
+      msg:'tarjeta encontrada con su dni',
+      tarjetas
+    }
      
+  
     });
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({
-      status: 500, 
-      data:{
-        ok: 'error',
-        msg: 'no se encontro la tarjeta'
-      }
-     
-    });
-  }
     
-
-
-
   }
 
 const crearTarjeta = async(req, res = response) => {
