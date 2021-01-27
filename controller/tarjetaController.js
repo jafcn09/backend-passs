@@ -1,6 +1,6 @@
 const { response } = require('express');
 const Tarjeta = require('../models/tarjeta');
-
+const Usuario = require('../models/usuario');
 const getTarjetas = async(req, res) => {
   const desde = Number(req.query.desde) || 0;
 
@@ -14,9 +14,42 @@ const getTarjetas = async(req, res) => {
     ok: true,
     tarjetas,
     total_reg
-    // uid: req.uid
   });
 }
+const getTarjetaByDni = async(req, res) => {
+  const  dni= req.params.dni;
+
+  const tarjetas = await Tarjeta.find({usuario: usuario.uid});
+  const  usuario  = await Usuario.findOne({dni: dni});
+  try {
+ 
+    res.json({
+      status:200,
+      data: {
+        ok: 'se encontro el dni ',
+        msg:'tarjeta valida',
+        msg: tarjetas,
+        
+      }
+     
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      status: 500, 
+      data:{
+        ok: 'error',
+        msg: 'no se encontro la tarjeta'
+      }
+     
+    });
+  }
+    
+
+
+
+  }
+
 const crearTarjeta = async(req, res = response) => {
   const uid = req.uid;
   const tarjeta = new Tarjeta({
@@ -141,6 +174,7 @@ const borrarTarjeta = async(req, res = response) => {
 
 module.exports = {
   getTarjetas,
+  getTarjetaByDni,
   crearTarjeta,
   actualizarTarjeta,
   borrarTarjeta

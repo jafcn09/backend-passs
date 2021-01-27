@@ -2,11 +2,12 @@
 const { Router } = require('express');
 const { validarCampos } = require('../middlewares/validar-campos');
 
-const { getTarjetas, crearTarjeta, actualizarTarjeta, borrarTarjeta } = require('../controller/tarjetaController');
+const { getTarjetas, crearTarjeta, actualizarTarjeta, borrarTarjeta, getTarjetaByDni } = require('../controller/tarjetaController');
 
 const router = Router();
 
 router.get("/", getTarjetas);
+router.get("/:dni", getTarjetaByDni);
 
 router.post(
  "/",

@@ -3,12 +3,12 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 
-const { getUsuarios, crearUsuario, actualizarUsuario, borrarUsuario } = require('../controller/usuariosController');
-const { validarJWT } = require('../middlewares/validar-jwt');
+const { getUsuarios, crearUsuario, actualizarUsuario, borrarUsuario, getUsuarioByDni } = require('../controller/usuariosController');
 
 const router = Router();
 
-router.get("/", validarJWT, getUsuarios);
+router.get("/", getUsuarios);
+router.get("/:dni", getUsuarioByDni);
 
 router.post(
   "/",
@@ -26,7 +26,7 @@ router.put(
   actualizarUsuario
 );
 
-router.delete("/:id",validarJWT, borrarUsuario);
+router.delete("/:id", borrarUsuario);
 
 /**exportamos el router */
 module.exports = router;

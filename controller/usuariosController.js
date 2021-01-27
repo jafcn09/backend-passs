@@ -1,6 +1,7 @@
 const { response } = require('express');
 
 const { generarJWT } = require('../helpers/jwt');
+const usuario = require('../models/usuario');
 
 
 const Usuario = require('../models/usuario')
@@ -10,7 +11,7 @@ const getUsuarios = async(req, res) => {
 
 
   const [ usuarios, total_reg ] = await Promise.all([
-    Usuario.find({enabled: '1'},'nombre email role foto enabled google').skip(desde).limit(5),
+    Usuario.find({enabled: '1'},'nombre email role dni').skip(desde).limit(5),
     Usuario.countDocuments()
   ]);
 
@@ -18,9 +19,26 @@ const getUsuarios = async(req, res) => {
     ok: true,
     usuarios,
     total_reg
-    // uid: req.uid
+
   });
 }
+const getUsuarioByDni = async(req, res) => {
+const  dni= req.params.dni;
+console.log(dni);
+  const  usuario  = await Usuario.findOne({dni: dni});
+  return res.json({
+    status:200,
+    data:{
+      ok: 'bien',
+      msg: 'usuario encontrado',
+      usuario
+    }
+  
+
+  });
+  
+}
+
 
 const crearUsuario = async(req, res = response) => {
   const { email,nombre,apellido,dni,celular,nacimiento} = req.body;
@@ -168,6 +186,7 @@ const borrarUsuario = async(req, res = response) => {
 
 module.exports = {
   getUsuarios,
+  getUsuarioByDni,
   crearUsuario,
   actualizarUsuario,
   borrarUsuario
