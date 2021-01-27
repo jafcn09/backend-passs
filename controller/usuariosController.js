@@ -24,13 +24,12 @@ const getUsuarios = async(req, res) => {
 }
 const getUsuarioByDni = async(req, res) => {
 const  dni= req.params.dni;
-console.log(dni);
   const  usuario  = await Usuario.findOne({dni: dni});
   return res.json({
     status:200,
     data:{
       ok: 'bien',
-      msg: 'usuario encontrado',
+      msg: 'usuario encontrado por su dni',
       usuario
     }
   

@@ -21,17 +21,14 @@ const getTarjetaByDni = async(req, res) => {
   console.log(dni);
     const  usuario  = await Usuario.findOne({dni: dni});
     const tarjetas = await Tarjeta.find({usuario: usuario.uid});
-    return res.json({
+    res.json({
     status:200,
     data:{
       ok: 'bien',
-      msg:'tarjeta encontrada con su dni',
+      msg:'tarjeta encontrada por  su dni',
       tarjetas
     }
-     
-  
     });
-    
   }
 
 const crearTarjeta = async(req, res = response) => {
