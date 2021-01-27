@@ -115,7 +115,6 @@ const actualizarTarjeta = async (req, res = response) => {
     });
   }
 }
-
 const borrarTarjeta = async(req, res = response) => {
   const uid = req.params.id;
 
@@ -125,30 +124,30 @@ const borrarTarjeta = async(req, res = response) => {
       return res.status(404).json({
         status:404,
         data:{
-          msg: 'No existe una tarjeta asociada'
+          msg: 'No existe un usuario con ese codigo en la base de datos'
         }
     
       })
     }
     
-    if (tarjetaDB.enabled === 'uid') {
+    if (tarjetaDB.enabled === '1') {
       await Tarjeta.findByIdAndUpdate(uid, {enabled: '0'}, {new: true});
       res.json({
         ok: true,
-        msg: 'Tarjeta deshabilitado.'
+        msg: 'Tarjeta eliminada.'
       });
     } else {
       await Tarjeta.findByIdAndUpdate(uid, {enabled: '1'}, {new: true});
       res.json({
         ok: true,
-        msg: 'tarjeta habilitada.'
+        msg: 'Tarjeta habilitada.'
       });
     }
     // 
   } catch (error) {
     res.status(500).json({
       ok: false,
-      msg: 'error al borrar la tarjeta.' 
+      msg: 'error al borrar usuario.' 
     });
   }
 }
