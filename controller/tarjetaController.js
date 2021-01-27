@@ -131,7 +131,7 @@ const borrarTarjeta = async(req, res = response) => {
       })
     }
     
-    if (tarjetaDB.enabled === '1') {
+    if (tarjetaDB.enabled === 'uid') {
       await Tarjeta.findByIdAndUpdate(uid, {enabled: '0'}, {new: true});
       res.json({
         ok: true,
@@ -148,7 +148,7 @@ const borrarTarjeta = async(req, res = response) => {
   } catch (error) {
     res.status(500).json({
       ok: false,
-      msg: 'error al borrar usuario.' 
+      msg: 'error al borrar la tarjeta.' 
     });
   }
 }
