@@ -1,6 +1,7 @@
 const { response } = require('express');
 const Tarjeta = require('../models/tarjeta');
 const Usuario = require('../models/usuario');
+const clone = require('node-clone-js')
 const getTarjetas = async(req, res) => {
   const desde = Number(req.query.desde) || 0;
 
@@ -16,26 +17,28 @@ const getTarjetas = async(req, res) => {
     total_reg
   });
 }
-const getTarjetaByDni = async(req, res) => {
-  const  dni= req.params.dni;
-  console.log(dni);
+const getTarjetaByDni = async(req, res = response) => {
     const  usuario  = await Usuario.findOne({dni: dni});
     const tarjetas = await Tarjeta.find({usuario: usuario.uid});
+ 
     res.json({
     status:200,
     data:{
+
       ok: 'bien',
       msg:'tarjeta encontrada por  su dni',
-      tarjetas
+      tarjetas,
+      reg
     }
     });
   }
 
 const crearTarjeta = async(req, res = response) => {
-  const uid = req.uid;
+
+  const uid = req.query.uid
   const tarjeta = new Tarjeta({
     usuario: uid,
-    ...req.body
+
   });
 
   try {
@@ -46,7 +49,7 @@ const crearTarjeta = async(req, res = response) => {
       data: {
         ok: 'se registro correctamente ',
         msg:'se creo la tarjeta',
-        msg: tarjetaSave
+
       }
      
     });

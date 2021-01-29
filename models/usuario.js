@@ -17,7 +17,6 @@ const UsuarioSchema = Schema({
 nacimiento:{
   type: String,
   required: true,
-  unique:true,
 },
   email: {
     type: String,
@@ -31,7 +30,7 @@ nacimiento:{
   },
   enabled: {
     type: String,
-    default: 1
+    default: 3
   },
   role: {
     type: String,
@@ -41,11 +40,7 @@ nacimiento:{
 });
 
 /**modificando _id, _v1 */
-UsuarioSchema.method('toJSON', function() {
-  const { __v, _id,password, ...object } = this.toObject();
-  object.uid = _id;
-  return object;
-})
+Usuario: [{type: Schema.Types.ObjectId, ref: 'Tarjeta'}]
 
 
 /**implementamos el modelo

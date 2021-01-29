@@ -2,31 +2,29 @@ const {Schema, model} = require('mongoose');
 const TarjetaSchema = Schema ({
     nombre: {
         type: String,
-        required: true
+      unique: true
     },
     dueño: {
         type: String,
         required: true,
-        unique: true
+        unique:true,
     },
     tipo: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
    
     enable: {
         type: String,
-        default:1
+        default:3
     },
     usuario: {
         required: true,
         type: Schema.Types,
         ref: 'Usuario'
       }
-}, {colection: 'tarjetas'});
-TarjetaSchema.method('toJSON', function(){
-    const { __v, ...object } = this.toObject();
-    return object;
-})
+}, tarjetas = new Schema({ 
+
+}));
+Tarjeta: [{type: Schema.Types.ObjectId, ref:'Usuario'}]
 module.exports = model('tarjetas', TarjetaSchema);
