@@ -40,10 +40,10 @@ const  dni= req.params.dni;
 
 
 const crearUsuario = async(req, res = response) => {
-  const { email,nombre,apellido,dni,celular,nacimiento} = req.body;
+  const { email,nombre,apellido,dni,celular} = req.body;
 
   try {
-    const existeEmail = await Usuario.findOne({ email,dni,celular,nacimiento });
+    const existeEmail = await Usuario.findOne({ email,dni,celular });
 
     if(existeEmail) {
       return res.status(400).json({

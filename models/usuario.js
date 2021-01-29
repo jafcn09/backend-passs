@@ -16,7 +16,7 @@ const UsuarioSchema = Schema({
 },
 nacimiento:{
   type: String,
-  required: true,
+  required: true
 },
   email: {
     type: String,
