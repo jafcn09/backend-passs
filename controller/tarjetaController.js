@@ -7,7 +7,7 @@ const getTarjetas = async(req, res) => {
 
 
   const [ tarjetas, total_reg ] = await Promise.all([
-    Tarjeta.find({enabled: '1'},'usuario dueño nombre tarjeta').skip(desde).limit(5),
+    Tarjeta.find({enabled: '1'},'dueño nombre').skip(desde).limit(5),
     Tarjeta.countDocuments()
   ]);
 

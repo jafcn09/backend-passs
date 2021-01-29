@@ -5,42 +5,42 @@ const UsuarioSchema = Schema({
     type: String,
     required: true
   },
-  apellido: {
-    type: String,
-    required: true
-  },
-  dni:{
-    type: String,
-    required:true,
-    unique:true
-},
-nacimiento:{
-  type: String,
-  required: true
-},
   email: {
     type: String,
     required: true,
     unique: true
   },
-  celular:{
-  type: String,
-  required: true,
-  unique: true,
+  dni:{
+    type:String,
+    required:true,
+    unique:true
+  },
+  celular: {
+    type: String,
+    required: true, 
+    unique:true
+  },
+  nacimiento: {
+    type: String,
+    required: true
   },
   enabled: {
     type: String,
-    default: 3
+    default: 1
   },
   role: {
     type: String,
     required: true,
-    default: 'USER_ROLE' 
+    default: 'USUARIO' 
   }
 });
 
 /**modificando _id, _v1 */
-Usuario: [{type: Schema.Types.ObjectId, ref: 'Tarjeta'}]
+UsuarioSchema.method('toJSON', function() {
+  const { __v, _id, ...object } = this.toObject();
+  object.uid = _id;
+  return object;
+})
 
 
 /**implementamos el modelo
