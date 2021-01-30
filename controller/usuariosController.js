@@ -1,9 +1,5 @@
-const { response } = require('express');
-
+const { response, json } = require('express');
 const { generarJWT } = require('../helpers/jwt');
-const usuario = require('../models/usuario');
-
-
 const Usuario = require('../models/usuario')
 
 const getUsuarios = async(req, res) => {
@@ -23,8 +19,9 @@ const getUsuarios = async(req, res) => {
   });
 }
 const crearUsuario = async(req, res = response) => {
-  const { email,nombre,apellido,dni,celular} = req.body;
 
+  const { email,nombre,apellido,dni,celular} = req.body;
+  
   try {
     const existeEmail = await Usuario.findOne({ email,dni,celular });
 
@@ -47,7 +44,7 @@ const crearUsuario = async(req, res = response) => {
     const token = await generarJWT(usuario.id);
     
     await usuario.save(); /**es una promesa, puede q lo haga rapido o demore */
-
+  
     res.json({
  
       status:200,
@@ -61,7 +58,7 @@ const crearUsuario = async(req, res = response) => {
     });
 
   } catch (error) {
-    console.log(error)
+    
     res.status(500).json({
       status:500,
       data:{

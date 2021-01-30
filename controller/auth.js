@@ -5,7 +5,7 @@ const Usuario = require('../models/usuario');
 const login = async(req, res = response) => {
   const { dni} = req.body;
   try {
-    /**verificar email */
+    /**verificar dni  */
     const usuarioDB = await Usuario.findOne({enabled: '1',dni});
     if (!usuarioDB) {
       return res.status(400).json({
