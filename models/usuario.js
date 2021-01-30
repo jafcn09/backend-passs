@@ -25,8 +25,7 @@ const UsuarioSchema = Schema({
     required: true
   },
   enabled: {
-    type: String,
-    default: 1
+    type: String
   },
   role: {
     type: String,

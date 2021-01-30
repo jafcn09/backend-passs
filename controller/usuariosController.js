@@ -22,23 +22,6 @@ const getUsuarios = async(req, res) => {
 
   });
 }
-const getUsuarioByDni = async(req, res) => {
-const  dni= req.params.dni;
-  const  usuario  = await Usuario.findOne({dni: dni});
-  return res.json({
-    status:200,
-    data:{
-      ok: 'bien',
-      msg: 'usuario encontrado por su dni',
-      usuario
-    }
-  
-
-  });
-  
-}
-
-
 const crearUsuario = async(req, res = response) => {
   const { email,nombre,apellido,dni,celular} = req.body;
 
@@ -185,7 +168,6 @@ const borrarUsuario = async(req, res = response) => {
 
 module.exports = {
   getUsuarios,
-  getUsuarioByDni,
   crearUsuario,
   actualizarUsuario,
   borrarUsuario

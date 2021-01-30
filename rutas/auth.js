@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { login,  renewToken } = require('../controller/auth');
+const { login, getUsuarioByDni } = require('../controller/auth');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
 
@@ -15,11 +15,8 @@ router.post('/',
   login
 );
 
+router.get("/:dni", getUsuarioByDni);
 
-router.get('/renew',
-  validarJWT,
-  renewToken
-);
 
 
 

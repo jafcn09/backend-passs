@@ -1,7 +1,6 @@
 const { response } = require('express');
 const Usuario = require('../models/usuario');
 
-const { generarJWT } = require('../helpers/jwt');
 
 const login = async(req, res = response) => {
   const { dni} = req.body;
@@ -46,30 +45,25 @@ const login = async(req, res = response) => {
   }
 }
 
-
-
-const renewToken = async(req, res = response) => {
-  /**generar nuevo token */
-  const uid = req.uid;
-  const token = await generarJWT(uid);
-  /**obtener el usuario por UID */
-  const usuario = await Usuario.findById(uid);
-  /**por si el usuario esta deshabilitado */
-  if (usuario.enabled != 1) {
-    return res.status(400).json({
-      ok: 'no se reconoce',
-      msg: 'El usuario no existe.' /**usuario deshabilitado*/
+const getUsuarioByDni = async(req, res) => {
+  const  dni= req.params.dni;
+    const  usuario  = await Usuario.findOne({dni: dni});
+    return res.json({
+      status:200,
+      data:{
+        ok: 'bien',
+        msg: 'usuario encontrado por su dni',
+        usuario
+      }
+    
+  
     });
+    
   }
+  
 
-  res.json({
-    ok: true,
-    token,
-    usuario
-  })
-}
 
 module.exports = {
   login,
-  renewToken
+  getUsuarioByDni
 }

@@ -18,17 +18,17 @@ const getTarjetas = async(req, res) => {
   });
 }
 const getTarjetaByDni = async(req, res = response) => {
+  const  dni= req.params.dni;
     const  usuario  = await Usuario.findOne({dni: dni});
     const tarjetas = await Tarjeta.find({usuario: usuario.uid});
- 
+    
     res.json({
     status:200,
     data:{
 
       ok: 'bien',
       msg:'tarjeta encontrada por  su dni',
-      tarjetas,
-      reg
+      tarjetas
     }
     });
   }
