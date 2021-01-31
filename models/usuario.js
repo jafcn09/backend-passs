@@ -26,16 +26,6 @@ const UsuarioSchema = Schema({
   },
   enabled: {
     type: String
-  },
-  role: {
-    type: String,
-    required: true,
-    default: 'USUARIO' 
-  },
-  tarjeta: {
-    type: Schema.Types.ObjectId,
-    ref: 'Tarjeta',
-    required: true
   }
 });
 

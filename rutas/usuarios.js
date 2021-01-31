@@ -16,7 +16,7 @@ router.post(
   check('dni', 'Solo se puede ingresar maximo 8 digitos del dni').isLength({max: 8}),
   check('email', 'El email es obligatorio').isEmail().normalizeEmail(),
   check('celular', 'Solo se puede ingresar maximo 9 digitos del celular').isLength({max:9}),
-  check("nacimiento", 'La fecha de nacimiento es obligatoria').not().isEmpty(),
+  check("nacimiento", 'La fecha de nacimiento es obligatoria').isDate("DD-M-YYYY"),
       validarCampos,
   
       
