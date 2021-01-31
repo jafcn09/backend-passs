@@ -27,55 +27,52 @@ const getUsuario = async(req, res) => {
     usuario
   });
 }
-
 const crearUsuario = async(req, res = response) => {
+  const { email,nombre, apellido, dni,celular,nacimiento } = req.body;
 
-  const { email,nombre,apellido,dni,celular,nacimiento} = req.body;
-  
   try {
     const existeEmail = await Usuario.findOne({ email,dni,celular });
 
     if(existeEmail) {
       return res.status(400).json({
         status:400,
-
         data:{
-          ok: 'error',
-          msg: 'Este usuario, ya existe.'
+          ok:'error',
+          msg: 'Este usuario ya se ha registrado.'
         }
-        
+       
       });
     }
 
     const usuario = new Usuario(req.body)
-    
+    /**encriptar contraseña */
 
     /**generar token JWT */
     const token = await generarJWT(usuario.id);
     
     await usuario.save(); /**es una promesa, puede q lo haga rapido o demore */
-  
+
     res.json({
- 
       status:200,
       data:{
-        ok: 'Se hizo bien el registro',
-        msg: 'Se creo el usuario.',
+        ok: 'se registraron los datos',
+    
+        msg: 'se a creado el usuario.',
         usuario: usuario,
         token
       }
-     
+      
     });
 
   } catch (error) {
-    
+    console.log(error)
     res.status(500).json({
       status:500,
       data:{
-        ok: 'errror',
-        msg: 'Completar los campos por favor.'
+        ok: 'error',
+        msg: 'Estos campos son obligatorios.'
       }
-     
+    
     })
   }
 }
