@@ -1,13 +1,12 @@
 const {Schema, model} = require('mongoose');
 const TarjetaSchema = Schema ({
-    nombre: {
+    modelo: {
         type: String,
       unique: true
     },
-    dueño: {
+    nombre: {
         type: String,
         required: true,
-        unique:true,
     },
     tipo: {
         type: String,

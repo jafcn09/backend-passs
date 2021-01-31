@@ -13,8 +13,8 @@ router.get("/:dni", getTarjetaByDni);
 router.post(
  "/",
  [ 
+   check('modelo', 'El modelo es obligatorio').exists().isLength({min:5}),
    check('nombre', 'El nombre es obligatorio').exists().isLength({min:5}),
-   check('dueño', 'El dueño es obligatorio').exists().isLength({min:5}),
    check('tipo', 'El tipo de tarjeta es obligatorio').exists().isLength({min:5}),
    validarCampos
  ],

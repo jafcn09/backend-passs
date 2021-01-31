@@ -35,9 +35,13 @@ const getTarjetaByDni = async(req, res = response) => {
 
 const crearTarjeta = async(req, res = response) => {
 
-  const uid = req.query.uid
+  const {uid, nombre, modelo} = req.query;
   const tarjeta = new Tarjeta({
     usuario: uid,
+   usuario:nombre,
+   tarjeta: modelo
+  
+
 
   });
 
