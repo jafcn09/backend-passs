@@ -1,42 +1,50 @@
 const { response } = require('express');
 const Tarjeta = require('../models/tarjeta');
 const Usuario = require('../models/usuario');
-const getTarjetas = async(req, res) => {
+const getTarjetas = async (req, res) => {
+  
   const desde = Number(req.query.desde) || 0;
+  
+  let dni = req.query.dni;
 
+  search = {};
+  if (dni == undefined || dni == null){
+    search = { enabled: '1' };
+  }else{
+    const usuario = await Usuario.findOne({ dni: dni });
+    console.log(usuario.id)
+    search = { enabled: '1' , usuario:{_id:usuario.id}};
+  }
 
-  const [ tarjetas, total_reg ] = await Promise.all([
-    Tarjeta.find({enabled: '1'},'nombre').skip(desde).limit(5),
+  const [tarjetas, total_reg] = await Promise.all([
+    Tarjeta.find(search, 'nombre usuario tipo').skip(desde).limit(5),
     Tarjeta.countDocuments()
   ]);
 
   res.json({
     ok: true,
+    filters:{'dni':dni},
     tarjetas,
     total_reg
   });
 }
-const getTarjetaByDni = async(req, res = response) => {
-  const  dni= req.params.dni;
-    const  usuario  = await Usuario.findOne({dni: dni});
-    const tarjetas = await Tarjeta.find({usuario: usuario.uid});
-    
-    res.json({
-    status:200,
-    data:{
 
-      ok: 'bien',
-      msg:'tarjeta encontrada por  su dni',
-      tarjetas
-    }
-    });
-  }
+const getTarjeta = async (req, res) => {
+  
+  const tarjeta = await Tarjeta.findOne({ _id: req.params.id });
+  res.json({
+    ok: true,
+    id: req.params.id,
+    tarjeta
+  });
+}
 
 const crearTarjeta = async(req, res = response) => {
 
-  const uid= req.query.uid;
+  const uid= req.uid;
   const tarjeta = new Tarjeta({
     usuario: uid,
+    ...req.body
   
 
 
@@ -158,7 +166,7 @@ const borrarTarjeta = async(req, res = response) => {
 
 module.exports = {
   getTarjetas,
-  getTarjetaByDni,
+  getTarjeta,
   crearTarjeta,
   actualizarTarjeta,
   borrarTarjeta

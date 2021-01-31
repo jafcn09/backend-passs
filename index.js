@@ -3,7 +3,7 @@ const express = require('express') /**importando express */
 const cors = require('cors')
 
 const { dbConnection } = require('./database/config');
-
+const {morgan} = require('morgan');
 const app = express();/**crear el servidor express */
 
 /**el use es in middleware, q es un funcion q se va a ejutar para todas las lineas q se ejecuta debajo */

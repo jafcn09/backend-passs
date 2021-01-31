@@ -4,22 +4,24 @@ const TarjetaSchema = Schema ({
         type: String,
       unique: true
     },
-    tipo_tarjeta: {
+    titular:{
+        type:String, 
+        required: true
+    },
+    tipo: {
         type: String,
         required: true
     },
    
     enable: {
         type: String,
-        default:3
+        default:1
     },
     usuario: {
         required: true,
-        type: Schema.Types,
+        type: Schema.ObjectId,
         ref: 'Usuario'
       }
-}, tarjetas = new Schema({ 
+},);
 
-}));
-Tarjeta: [{type: Schema.Types.ObjectId, ref:'Usuario'}]
 module.exports = model('tarjetas', TarjetaSchema);

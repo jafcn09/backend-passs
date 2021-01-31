@@ -18,9 +18,19 @@ const getUsuarios = async(req, res) => {
 
   });
 }
+const getUsuario = async(req, res) => {
+
+  const usuario = await Usuario.findOne({ dni: req.params.dni });
+
+  res.json({
+    ok: true,
+    usuario
+  });
+}
+
 const crearUsuario = async(req, res = response) => {
 
-  const { email,nombre,apellido,dni,celular} = req.body;
+  const { email,nombre,apellido,dni,celular,nacimiento} = req.body;
   
   try {
     const existeEmail = await Usuario.findOne({ email,dni,celular });
@@ -165,6 +175,7 @@ const borrarUsuario = async(req, res = response) => {
 
 module.exports = {
   getUsuarios,
+  getUsuario,
   crearUsuario,
   actualizarUsuario,
   borrarUsuario

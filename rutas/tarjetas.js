@@ -2,18 +2,18 @@
 const { Router } = require('express');
 const { validarCampos } = require('../middlewares/validar-campos');
 
-const { getTarjetas, crearTarjeta, actualizarTarjeta, borrarTarjeta, getTarjetaByDni } = require('../controller/tarjetaController');
+const { getTarjetas, getTarjeta, crearTarjeta, actualizarTarjeta, borrarTarjeta } = require('../controller/tarjetaController');
 const { check } = require('express-validator');
 
 const router = Router();
 
 router.get("/", getTarjetas);
-router.get("/:dni", getTarjetaByDni);
+router.get("/:id", getTarjeta);
 
 router.post(
  "/",
  [ 
-   check('modelo', 'El modelo es obligatorio').exists().isLength({min:5}),
+   check('titular', 'El titular es obligatorio').exists().isLength({min:5}),
    check('nombre', 'El nombre es obligatorio').exists().isLength({min:5}),
    check('tipo', 'El tipo de tarjeta es obligatorio').exists().isLength({min:5}),
    validarCampos
