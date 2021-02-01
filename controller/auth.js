@@ -1,4 +1,5 @@
 const { response } = require('express');
+const { generarJWT } = require('../helpers/jwt');
 const Usuario = require('../models/usuario');
 
 
@@ -20,13 +21,14 @@ const login = async(req, res = response) => {
       });
     }
 
-
+    const token = await generarJWT(usuarioDB.id);
     res.json({
       status: 200,
       data: {
         ok:  'bienvenido',
         cambio: 'Dni '+usuarioDB.dni + 'exitoso.',
-       }
+      token
+      }
 
      
     });
@@ -60,8 +62,6 @@ const getUsuarioByDni = async(req, res) => {
     });
     
   }
-  
-
 
 module.exports = {
   login,
