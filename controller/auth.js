@@ -1,4 +1,5 @@
 const { response } = require('express');
+const { token } = require('morgan');
 const { generarJWT } = require('../helpers/jwt');
 const Usuario = require('../models/usuario');
 
@@ -26,7 +27,7 @@ const login = async(req, res = response) => {
       status: 200,
       data: {
         ok:  'bienvenido',
-        cambio: 'Dni '+usuarioDB.dni + 'exitoso.',
+        cambio: 'se encontro '+usuarioDB.dni + 'exitoso.',
       token
       }
 
@@ -39,7 +40,7 @@ const login = async(req, res = response) => {
      
       status: 300,
       data:{
-        ok: 'no se reconoce',
+        ok: 'no se reconoce el dni',
         cambio: 'Hable con el administrador.'
       }
       

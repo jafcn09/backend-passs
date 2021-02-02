@@ -17,13 +17,13 @@ const getTarjetas = async (req, res) => {
   }
 
   const [tarjetas, total_reg] = await Promise.all([
-    Tarjeta.find(search, 'nombre usuario tipo').skip(desde).limit(5),
+    Tarjeta.find(search, 'nombre usuario tipo titular').skip(desde).limit(5),
     Tarjeta.countDocuments()
   ]);
 
   res.json({
     ok: true,
-    filters:{'dni':dni},
+    filters:{'Se esta buscando la  informacion de la tarjetas afiliadas por ese dni':dni},
     tarjetas,
     total_reg
   });

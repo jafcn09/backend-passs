@@ -13,7 +13,7 @@ const TarjetaSchema = Schema ({
         required: true
     },
    
-    enable: {
+    enabled: {
         type: String,
         default:1
     },
