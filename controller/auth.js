@@ -27,7 +27,7 @@ const login = async(req, res = response) => {
       status: 200,
       data: {
         ok:  'bienvenido',
-        cambio: 'se encontro '+usuarioDB.dni + 'exitoso.',
+        cambio: 'se encontro  el dni '+usuarioDB.dni,
       token
       }
 

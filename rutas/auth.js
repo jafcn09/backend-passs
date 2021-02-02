@@ -7,7 +7,7 @@ const router = Router();
 
 router.post('/',
   [
-     check("dni", "Comuniquese con soporte").isLength({max: 8}),
+     check("dni", "Ingrese bien los datos por favor").isLength({max: 8}),
   
     validarCampos
   ],
