@@ -22,7 +22,8 @@ const getTarjetas = async (req, res) => {
   ]);
 
   res.json({
-    ok: true,
+    status:200,
+    ok: 'informacion',
     filters:{'Se esta buscando la  informacion de la tarjetas afiliadas por ese dni':dni},
     tarjetas,
     total_reg

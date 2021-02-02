@@ -1,8 +1,7 @@
 const {Schema, model} = require('mongoose');
 const TarjetaSchema = Schema ({
     nombre: {
-        type: String,
-      unique: true
+        type: String
     },
     titular:{
         type:String, 
